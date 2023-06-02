@@ -9,6 +9,8 @@ You can either follow the directions below or [open this in gitpod](https://gitp
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
 
 ## Setup
+
+### Clone the Repo
 Before you can run the plugin, you need to get the code onto your computer. This is done by cloning the GitHub repository. If you have git installed, you can do this by running the following command in your terminal:
 
 ```bash
@@ -21,13 +23,21 @@ Once you have cloned the repository, navigate into the directory:
 ```bash
 cd cassandra-todolist-chatgpt-plugin
 ```
-
+### Install Prerequisites
 
 To install the required packages for this plugin, run the following command:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### Setup DB & API 
+
+You can read up on how to setup the database and configure the API spec. It's important to either have a Cassandra server or use Datastax Astra DB, otherwise this example won't work. 
+- [Database setup](/setup/database.md) - Create a database, keyspace, and import the schema/
+- [API setup](/setup/database.md) - Update plugin and openapi spec for ChatGPT to discover your API's capabilities. 
+
+### Run the API 
 
 To run the plugin, enter the following command:
 
