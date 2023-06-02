@@ -1,3 +1,7 @@
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+from cassandra.query import SimpleStatement
+
 import json
 
 import quart
@@ -11,25 +15,49 @@ _TODOS = {}
 
 @app.route("/todos/<string:username>", methods=["POST"])
 async def add_todo(username):
-    request = await quart.request.get_json(force=True)
-    if username not in _TODOS:
-        _TODOS[username] = []
-    _TODOS[username].append(request["todo"])
+    request_data = await quart.request.get_json(force=True)
+    task = request_data["todo"]
+    
+    # Check if the username already exists in the Cassandra table
+    query = f"SELECT COUNT(*) FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    count = result.one()[0]
+    
+    # If the username does not exist, insert it into the Cassandra table
+    if count == 0:
+        insert_query = f"INSERT INTO cassio_tutorials.todo_list (username) VALUES ('{username}')"
+        session.execute(insert_query)
+        
+    # Insert the task into the Cassandra table
+    task_insert_query = f"INSERT INTO cassio_tutorials.todo_list (username, task) VALUES ('{username}', '{task}')"
+    session.execute(task_insert_query)
     return quart.Response(response='OK', status=200)
 
 @app.route("/todos/<string:username>", methods=["GET"])
 async def get_todos(username):
-    #return quart.Response(response=json.dumps(_TODOS.get(username, [])), status=200)
-    return quart.jsonify(_TODOS.get(username, []))
-
+    # Retrieve the tasks from the Cassandra table for the provided username
+    query = f"SELECT task FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    tasks = [row.task for row in result]
+    return quart.jsonify(tasks)
 
 @app.route("/todos/<string:username>", methods=["DELETE"])
 async def delete_todo(username):
-    request = await quart.request.get_json(force=True)
-    todo_idx = request["todo_idx"]
-    # fail silently, it's a simple plugin
-    if 0 <= todo_idx < len(_TODOS[username]):
-        _TODOS[username].pop(todo_idx)
+    request_data = await quart.request.get_json(force=True)
+    todo_idx = request_data["todo_idx"]
+
+    # Retrieve the task at the given index for the provided username
+    query = f"SELECT task FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    tasks = [row.task for row in result]
+
+    if 0 <= todo_idx < len(tasks):
+        task_to_delete = tasks[todo_idx]
+
+        # Delete the task from the Cassandra table
+        query = f"DELETE FROM cassio_tutorials.todo_list WHERE username = '{username}' AND task = '{task_to_delete}'"
+        session.execute(query)
+
     return quart.Response(response='OK', status=200)
 
 @app.route("/logo.png", methods=["GET"])
