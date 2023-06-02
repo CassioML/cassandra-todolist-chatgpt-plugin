@@ -10,13 +10,15 @@ You can either follow the directions below or [open this in gitpod](https://gitp
 ## Setup
 Before you can run the plugin, you need to get the code onto your computer. This is done by cloning the GitHub repository. If you have git installed, you can do this by running the following command in your terminal:
 
-```git clone https://github.com/CassioML/cassandra-todolist-chatgpt-plugin
+```bash
+git clone https://github.com/CassioML/cassandra-todolist-chatgpt-plugin
 ```
 
 This will create a copy of the repository on your local machine.
 Once you have cloned the repository, navigate into the directory:
 
-```cd plugins-quickstart
+```bash
+cd plugins-quickstart
 ```
 
 
