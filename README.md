@@ -4,7 +4,8 @@ Get a todo list ChatGPT plugin up and running in under 5 minutes using Python. T
 
 ## Quickstart in Gitpod
 
-You can either follow the directions below or [open this in gitpod](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
+You can either follow the directions below or [open this in gitpod](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin).
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
 
 ## Setup
@@ -18,7 +19,7 @@ This will create a copy of the repository on your local machine.
 Once you have cloned the repository, navigate into the directory:
 
 ```bash
-cd plugins-quickstart
+cd cassandra-todolist-chatgpt-plugin
 ```
 
 
@@ -48,8 +49,10 @@ The plugin should now be installed and enabled! You can start with a question li
 
 If you run into issues or have questions building a plugin, please join our [Developer community forum](https://community.openai.com/c/chat-plugins/20).
 
-## TODOS
+## Todo
 - [ ] Update links to connect w/ CassioML community on Github , PlanetCassandra discord
 - [ ] Add Cassandra Driver/Cassio Lib to interact w/ Cassandra/Astra 
-- [ ] Add instructions to create schema in Cassandra/Astra 
 - [ ] Add CRUD code for TODOs in main.py
+
+## Done 
+- [x] Add instructions to create schema in Cassandra/Astra 
