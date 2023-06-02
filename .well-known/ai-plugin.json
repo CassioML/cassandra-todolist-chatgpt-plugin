@@ -1,15 +1,15 @@
 {
     "schema_version": "v1",
-    "name_for_human": "TODO List (no auth)",
+    "name_for_human": "Cassandra TODO List (no auth)",
     "name_for_model": "todo",
-    "description_for_human": "Manage your TODO list. You can add, remove and view your TODOs.",
-    "description_for_model": "Plugin for managing a TODO list, you can add, remove and view your TODOs.",
+    "description_for_human": "Manage your TODO list in Apache Cassandra. You can add, remove and view your TODOs.",
+    "description_for_model": "Plugin for managing a TODO list, you can add, remove and view your TODOs in Apache Cassandra.",
     "auth": {
       "type": "none"
     },
     "api": {
       "type": "openapi",
-      "url": "http://localhost:5003/openapi.yaml",
+      "url": "http://localhost:5003/openapi.yaml"
     },
     "logo_url": "http://localhost:5003/logo.png",
     "contact_email": "legal@example.com",
