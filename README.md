@@ -5,6 +5,7 @@ Get a todo list ChatGPT plugin up and running in under 5 minutes using Python. T
 ## Quickstart in Gitpod
 
 You can either follow the directions below or [open this in gitpod](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
 
 ## Setup
 Before you can run the plugin, you need to get the code onto your computer. This is done by cloning the GitHub repository. If you have git installed, you can do this by running the following command in your terminal:
