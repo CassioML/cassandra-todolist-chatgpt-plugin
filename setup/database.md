@@ -86,4 +86,4 @@ To populate the newly-created keyspace with the required data:
 
 ### Your database is ready
 
-The next step is to configure the necessary [API Keys](/api.md).
+The next step is to configure the necessary [API Keys](/setup/api.md).
