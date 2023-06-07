@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS cassio_tutorials.todos (
+CREATE TABLE IF NOT EXISTS todos (
     username text,
     todo text,    
-    PRIMARY KEY (username));
+    PRIMARY KEY ((username), todo)
+) WITH CLUSTERING ORDER BY (todo ASC);
