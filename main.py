@@ -1,12 +1,22 @@
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
-from cassandra.query import SimpleStatement
-
+import os
 import json
-
 import quart
 import quart_cors
 from quart import request
+load_dotenv()
+
+#Configure the Python Driver for Cassandra
+#You'll need to have moved the secure connect bundle downloaded through your Astra UI (the Connect tab) to the specified location and ensure that the name matches 
+cloud_config= {
+        'secure_connect_bundle': './setup/secure-connect-cassio-ml.zip'
+}
+#In order for the Auth_Provider to work, your .env file must match the exact names specified here (or rename them and make sure the names match. 
+auth_provider = PlainTextAuthProvider(os.getenv("astra_clientID"),os.getenv("astra_clientSecret"))
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect()
+
 
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
 
