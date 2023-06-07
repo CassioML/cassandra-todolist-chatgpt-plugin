@@ -12,7 +12,7 @@ load_dotenv()
 cloud_config= {
         'secure_connect_bundle': './setup/secure-connect-cassio-ml.zip'
 }
-#In order for the Auth_Provider to work, your .env file must match the exact names specified here (or rename them and make sure the names match. 
+#In order for the Auth_Provider to work, your .env file must match the exact names specified here (or rename them and make sure the names match). 
 auth_provider = PlainTextAuthProvider(os.getenv("astra_clientID"),os.getenv("astra_clientSecret"))
 cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 session = cluster.connect()
@@ -20,8 +20,7 @@ session = cluster.connect()
 
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
 
-# Keep track of todo's. Does not persist if Python session is restarted.
-_TODOS = {}
+# Keep track of todo's. Todos written to astra will persist beyond the end of your python session.
 
 @app.route("/todos/<string:username>", methods=["POST"])
 async def add_todo(username):
