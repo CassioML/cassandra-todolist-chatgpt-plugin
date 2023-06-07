@@ -1,3 +1,4 @@
 quart
 quart-cors
 cassandra-driver
+python-dotenv
