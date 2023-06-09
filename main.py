@@ -1,35 +1,72 @@
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+import os
 import json
-
 import quart
 import quart_cors
 from quart import request
+load_dotenv()
+
+#Configure the Python Driver for Cassandra
+#You'll need to have moved the secure connect bundle downloaded through your Astra UI (the Connect tab) to the specified location and ensure that the name matches 
+cloud_config= {
+        'secure_connect_bundle': './setup/secure-connect-cassio-ml.zip'
+}
+#In order for the Auth_Provider to work, your .env file must match the exact names specified here (or rename them and make sure the names match). 
+auth_provider = PlainTextAuthProvider(os.getenv("astra_clientID"),os.getenv("astra_clientSecret"))
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect()
+
 
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
 
-# Keep track of todo's. Does not persist if Python session is restarted.
-_TODOS = {}
+# Keep track of todo's. Todos written to astra will persist beyond the end of your python session.
 
 @app.route("/todos/<string:username>", methods=["POST"])
 async def add_todo(username):
-    request = await quart.request.get_json(force=True)
-    if username not in _TODOS:
-        _TODOS[username] = []
-    _TODOS[username].append(request["todo"])
+    request_data = await quart.request.get_json(force=True)
+    task = request_data["todo"]
+    
+    # Check if the username already exists in the Cassandra table
+    query = f"SELECT COUNT(*) FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    count = result.one()[0]
+    
+    # If the username does not exist, insert it into the Cassandra table
+    if count == 0:
+        insert_query = f"INSERT INTO cassio_tutorials.todo_list (username) VALUES ('{username}')"
+        session.execute(insert_query)
+        
+    # Insert the task into the Cassandra table
+    task_insert_query = f"INSERT INTO cassio_tutorials.todo_list (username, task) VALUES ('{username}', '{task}')"
+    session.execute(task_insert_query)
     return quart.Response(response='OK', status=200)
 
 @app.route("/todos/<string:username>", methods=["GET"])
 async def get_todos(username):
-    #return quart.Response(response=json.dumps(_TODOS.get(username, [])), status=200)
-    return quart.jsonify(_TODOS.get(username, []))
-
+    # Retrieve the tasks from the Cassandra table for the provided username
+    query = f"SELECT task FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    tasks = [row.task for row in result]
+    return quart.jsonify(tasks)
 
 @app.route("/todos/<string:username>", methods=["DELETE"])
 async def delete_todo(username):
-    request = await quart.request.get_json(force=True)
-    todo_idx = request["todo_idx"]
-    # fail silently, it's a simple plugin
-    if 0 <= todo_idx < len(_TODOS[username]):
-        _TODOS[username].pop(todo_idx)
+    request_data = await quart.request.get_json(force=True)
+    todo_idx = request_data["todo_idx"]
+
+    # Retrieve the task at the given index for the provided username
+    query = f"SELECT task FROM cassio_tutorials.todo_list WHERE username = '{username}'"
+    result = session.execute(query)
+    tasks = [row.task for row in result]
+
+    if 0 <= todo_idx < len(tasks):
+        task_to_delete = tasks[todo_idx]
+
+        # Delete the task from the Cassandra table
+        query = f"DELETE FROM cassio_tutorials.todo_list WHERE username = '{username}' AND task = '{task_to_delete}'"
+        session.execute(query)
+
     return quart.Response(response='OK', status=200)
 
 @app.route("/logo.png", methods=["GET"])
