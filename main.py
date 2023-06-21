@@ -5,6 +5,7 @@ import json
 import quart
 import quart_cors
 from quart import request
+from dotenv import load_dotenv
 load_dotenv()
 
 #Configure the Python Driver for Cassandra
