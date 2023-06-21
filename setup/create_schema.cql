@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS todo_list (
+CREATE TABLE IF NOT EXISTS todos (
     username text,
-    task text,    
-    PRIMARY KEY ((username), task)
-) WITH CLUSTERING ORDER BY (task ASC);
+    todo text,    
+    PRIMARY KEY ((username), todo)
+) WITH CLUSTERING ORDER BY (todo ASC);
