@@ -43,7 +43,7 @@ You can read up on how to setup the database and configure the API spec. It's im
 touch .env
 ```
 
-and add (if you are using DataStax Astra) the two components of the Astra Token:
+and add (if you are using DataStax Astra) the two components of the Astra Token to your .env file:
 ```code
 astra_clientID="<<your clientID"
 astra_clientSecret="<<your clientSecret>>"
