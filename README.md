@@ -48,6 +48,7 @@ and add (if you are using DataStax Astra) the two components of the Astra Token 
 astra_clientID="<<your clientID"
 astra_clientSecret="<<your clientSecret>>"
 ```
+If you are using Astra, you'll also need to download and add the Secure Connect Bundle into your ./setup folder.
 
 ### Run the API 
 
