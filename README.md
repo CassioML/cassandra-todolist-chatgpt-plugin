@@ -1,3 +1,4 @@
+
 # Cassandra Todolist ChatGPT plugin Quickstart
 
 Get a todo list ChatGPT plugin up and running in under 5 minutes using Python. This plugin is designed to work in conjunction with the [ChatGPT Plugins Documentation](https://platform.openai.com/docs/plugins). If you do not already have plugin developer access, please [join the waitlist](https://openai.com/waitlist/plugins).
@@ -36,6 +37,18 @@ pip install -r requirements.txt
 You can read up on how to setup the database and configure the API spec. It's important to either have a Cassandra server or use Datastax Astra DB, otherwise this example won't work. 
 - [Database setup](/setup/database.md) - Create a database, keyspace, and import the schema/
 - [API setup](/setup/database.md) - Update plugin and openapi spec for ChatGPT to discover your API's capabilities. 
+
+#### Create/edit .env and add the DB details to your .env file
+```bash
+touch .env
+```
+
+and add (if you are using DataStax Astra) the two components of the Astra Token to your .env file:
+```code
+astra_clientID="<<your clientID"
+astra_clientSecret="<<your clientSecret>>"
+```
+If you are using Astra, you'll also need to download and add the Secure Connect Bundle into your ./setup folder.
 
 ### Run the API 
 
