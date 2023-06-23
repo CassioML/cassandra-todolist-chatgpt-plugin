@@ -9,7 +9,7 @@ You can either follow the directions below or [open this in gitpod](https://gitp
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/CassioML/cassandra-todolist-chatgpt-plugin)
 
-If you want to use the Gitpod method you'll need to make a few changes based on the port that Gitpod exposes. Once you've identified the port by clicking on the Ports tab in your Gitpod and copying the Port ID, you'll need to use that rather "localhost:5003" everywhere the IP and port are referenced, including in both the .well-known/ai-plugin.json Manifest file and the openapi.yaml API specification file in order for ChatGPT to correctly connect to your plugin.
+If you want to use the Gitpod method you'll need to make a few changes based on the port that Gitpod exposes. Once you've identified the port by clicking on the Ports tab in your Gitpod and copying the Port ID, you'll need to use that rather than "localhost:5003" everywhere the IP and port are referenced, including in both the .well-known/ai-plugin.json Manifest file and the openapi.yaml API specification file in order for ChatGPT to correctly connect to your plugin.
 
 ## Setup
 
